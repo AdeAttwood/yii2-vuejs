@@ -1,0 +1,21 @@
+{
+    "name": "adeattwood/yii2-vuejs",
+    "description": "Bringing vuejs to yii2",
+    "type": "yii2-extension",
+    "keywords": ["yii2","extension","vue","js"],
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Ade Attwood",
+            "email": "attwood16@googlemail.com"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "~2.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "adeattwood\\yii2vuejs\\": ""
+        }
+    }
+}
