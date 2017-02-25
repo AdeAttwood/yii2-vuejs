@@ -20,3 +20,5 @@ or add
 ```
 
 to the require section of your `composer.json` file.
+
+For more info view the [documentation](http://htmlpreview.github.io/?https://github.com/AdeAttwood/yii2-vuejs/blob/master/docs/index.html)
