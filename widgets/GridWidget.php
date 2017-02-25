@@ -20,9 +20,6 @@ use yii\helpers\Json;
 use yii\helpers\Url;
 use yii\web\JsExpression;
 
-/**
- * @todo sort out a asset
- */
 class GridWidget extends Widget
 {
     /**
@@ -105,8 +102,9 @@ class GridWidget extends Widget
 
                     if (!isset($this->labels[$column])) {
                         $this->labels[$column] = $data->attributeLabels()[$column];
-                        $dataArr[$column] = Yii::$app->formatter->format($data->{$column}, 'text');
                     }
+                    
+                    $dataArr[$column] = Yii::$app->formatter->format($data->{$column}, 'text');
                 } else if (is_array($column)) {
 
                     $attribute = isset($column['attribute']) ? $column['attribute'] : 'attribute' . $index;
@@ -119,12 +117,12 @@ class GridWidget extends Widget
 
                     if (!isset($this->labels[$attribute])) {
                         $this->labels[$attribute] = $label;
-
-                        if (is_callable($value)) {
-                            $dataArr[$attribute] = $value($data);
-                        } else {
-                            $dataArr[$attribute] = Yii::$app->formatter->format($value, $format);
-                        }
+                    }
+                    
+                    if (is_callable($value)) {
+                        $dataArr[$attribute] = $value($data);
+                    } else {
+                        $dataArr[$attribute] = Yii::$app->formatter->format($value, $format);
                     }
                 }
             }

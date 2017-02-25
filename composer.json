@@ -19,5 +19,8 @@
         "psr-4": {
             "adeattwood\\yii2vuejs\\": ""
         }
+    },
+    "require-dev": {
+        "phpdocumentor/phpdocumentor": "^2.9"
     }
 }
