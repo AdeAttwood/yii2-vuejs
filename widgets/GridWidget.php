@@ -1,14 +1,4 @@
 <?php
-/**
- * GridView Widget using Vue js
- * 
- * Like the standard yii2 Gridview but built with vue js.
- * By using vue this widget has live sorting and filtering
- * 
- * @author Ade Attwood <attwood16@googlemail.com>
- * @package yii2 Vuejs
- * @since 0.1
- */
 
 namespace adeattwood\yii2vuejs\widgets;
 
@@ -20,67 +10,118 @@ use yii\helpers\Json;
 use yii\helpers\Url;
 use yii\web\JsExpression;
 
+/**
+ * GridView widget using Vue js
+ * 
+ * Like the standard yii2 Gridview but built with vue js.
+ * By using vue this widget has live sorting and filtering
+ * 
+ * ## Usage
+ * <pre>
+ * <?= GridWidget::widget([
+ *         'dataProvider' => $dataProvider,
+ *          // Overriding public properties
+ *         'actionUpdateClass' => 'fa fa-pencil sm-pl-10',
+ *         'columns' => [
+ *             // Standard auto column from the model
+ *             'name',
+ *             [
+ *                  // Changing the label from the one defined in the model
+ *                 'attribute' => 'discription',
+ *                 'label' => 'New Name Label'
+ *             ],
+ *             [
+ *                  // Formatting a attribute using yii2 formatter
+ *                 'attribute' => 'price',
+ *                 'format' => ['currency']
+ *             ],
+ *             [
+ *                  // Custom column using a function as the value
+ *                 'label' => 'Custom Price',
+ *                 'value' => function ($model) {
+ *                     return $model->price / 2;
+ *                 }
+ *             ]
+ *         ]
+ * ); ?>
+ * 
+ * </pre>
+ * 
+ * @author Ade Attwood <attwood16@googlemail.com>
+ * @package yii2-vuejs
+ * @since 0.1
+ */
 class GridWidget extends Widget
 {
     /**
-     * @var type Array Options for the wrapper div
+     * @var Array Options for the wrapper div
      */
     public $options = ['class' => 'tbl-wrapper'];
     
     /**
-     * @var type Array Options for the table
+     * @var Array Options for the table
      */
     public $tableOptions = ['class' => 'table table-striped'];
     
     /**
-     * @var type Array Columns to be included in the table
+     * @var Array Columns to be included in the table
      */
     public $columns;
        
     /**
-     * @var type \yii\data\ActiveDataProvider Data for the table
+     * @var \yii\data\ActiveDataProvider Data for the table
      */
     public $dataProvider;
     
     /**
-     * @var type String The initial sort column default is the first item in the columns array
+     * @var String The initial sort column default is the first item in the columns array
      */
     public $sortKey;
     
     /**
-     * @var type Boolean To show the action column or not
+     * @var Boolean To show the action column or not
      */
     public $actionColumn = true;
     
     /**
-     * @var type String Class to use on the icon for the view button 
+     * @var String Class to use on the icon for the view button 
      */
     public $actionViewClass = 'fa fa-eye';
     
     /**
-     * @var type String Class to use on the icon for the update button 
+     * @var String Class to use on the icon for the update button 
      */
     public $actionUpdateClass = 'fa fa-pencil';
     
     /**
-     * @var type Boolean To show the filter inputs or not
+     * @var Boolean To show the filter inputs or not
      */
     public $filterFields = true;
     
     /**
-     * @var type String The primary key field used in links default get it from the schema builder
+     * @var String The primary key field used in links default get it from the schema builder
      */
     public $primaryKeyField;
     
-    
+    /**
+     * @var Array The main data that will go into the table
+     */
     private $vueData;
     
+    /**
+     * @var Array The v-model attributes for the filtering
+     */
     private $sortAttributes;
     
+    /**
+     * @var Array The labels that will go into the th tag 
+     */
     private $labels;
     
     /**
-     * @inheritdoc
+     * Initialises the widget filling the vueData and labels variables
+     * 
+     * @return void
      */
     public function init()
     {
@@ -143,11 +184,12 @@ class GridWidget extends Widget
         }
         
         $this->options['id'] = $this->id;
-        
     }
 
     /**
-     * @inheritdoc
+     * Generate the html for the table
+     * 
+     * @return String The html
      */
     public function run()
     {
@@ -219,9 +261,7 @@ class GridWidget extends Widget
 
         $this->registerAssets();
 
-        return $html;
-        
-        
+        return $html;        
     }
     
     /**
